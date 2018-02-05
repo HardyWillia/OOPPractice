@@ -1,3 +1,5 @@
 #Ignore an entire directory
 
 spades/build/
+
+string/build/
