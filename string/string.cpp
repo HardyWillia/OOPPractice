@@ -1,6 +1,7 @@
 //String class manipulation and practice
 
 #include <iostream>
+#include "string.hpp"
 
 int main(){
 
