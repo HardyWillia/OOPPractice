@@ -1,5 +1,3 @@
-#pragma once
-
 enum Rank {
 	Two, //Special case since using the jokers. Is not used for Hearts and Diamonds
 	Three,
@@ -15,8 +13,8 @@ enum Rank {
 	King,
 	Ace,
 	Deuce,
-	Little Joker,
-	Big Joker
+	LJoker,
+	BJoker,
 };
 
 
@@ -24,7 +22,7 @@ enum Suit {
 	Spade,
 	Diamond,
 	Heart,
-	Club
+	Club,
 };
 
 
