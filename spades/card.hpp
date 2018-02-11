@@ -26,7 +26,7 @@ enum Suit {
 };
 
 
-struct Card(){
+struct Card{
 
 	Card(Rank r,  Suit s)
 	: rank(r), suit(s) {}
@@ -34,10 +34,3 @@ struct Card(){
 
 };
 
-//Destructor
-~Card(){}
-
-
-void classification(){
-
-	Card c {Ace, Spades};
