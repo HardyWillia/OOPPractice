@@ -23,10 +23,10 @@ enum Rank {
 
 
 enum Suit {
-	Spade,
-	Diamond,
-	Heart,
-	Club,
+	Spades,
+	Diamonds,
+	Hearts,
+	Clubs,
 };
 
 
