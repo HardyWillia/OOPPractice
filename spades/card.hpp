@@ -50,7 +50,7 @@ public:
 	}
   
 	//Copyable
-		
+			
 
 	//Equality
 	bool operator==(Card c) const {
@@ -71,6 +71,7 @@ public:
 	}
 
 	//Destructor
+	~Card(){}
 
 private:
 	unsigned char bits;
