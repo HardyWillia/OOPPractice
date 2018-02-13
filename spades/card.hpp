@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+//An enum is 64 bits each, each rank is 4 bits
 enum Rank {
 	Two, //Special case since using the jokers. Is not used for Hearts and Diamonds
 	Three,
@@ -21,7 +22,7 @@ enum Rank {
 	BJoker,
 };
 
-
+//Each suit is 2 bits
 enum Suit {
 	Spades,
 	Diamonds,
@@ -29,8 +30,14 @@ enum Suit {
 	Clubs,
 };
 
+//Representation has this layout:
+//
+//   00ssrrrr (8 bits but only 6 are needed)
+//
+// where s is a suit bit and r is a rank bit
 
-struct Card{
+
+class Card{
 public:
 
 	//Changed struct to implement bitfields for Practice 
