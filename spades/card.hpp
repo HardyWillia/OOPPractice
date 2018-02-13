@@ -1,6 +1,7 @@
 #pragma once
 
-#include <iostream>
+#include <vector>
+#include <iosfwd>
 
 //An enum is 64 bits each, each rank is 4 bits
 enum Rank {
@@ -42,8 +43,11 @@ public:
 
 	//Changed struct to implement bitfields for Practice 
 
-	//Default constructor
-	Card(){}
+	//Default constructor, indeterminant
+	//Card(){}
+
+	//Better default constructor 
+	Card() = default;
 
 	Card(Rank r,  Suit s)
 	: bits((unsigned)s << 4 | (unsigned)r) {}
@@ -56,7 +60,7 @@ public:
 		return(Suit)((0b110000 & bits) >> 4); //have to shift back to keep unsigned format
 	}
   
-	//Copyable
+	//Copyable  --working on it 
 			
 
 	//Equality
@@ -83,4 +87,11 @@ public:
 private:
 	unsigned char bits;
 };
+
+// A deck is a sequence of cards
+// This is called a type alias
+
+//May be written like this:  typedef std::vector<Card> Deck;
+using Deck = std::vector<Card>;
+
 
