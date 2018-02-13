@@ -1,4 +1,4 @@
-anta Paravia & Fiumaccio. Translated from the original TRS-80 BASIC **
+/* anta Paravia & Fiumaccio. Translated from the original TRS-81 BASIC **
  ** source code into C by Thomas Knox <tknox@mac.com>.**
  ** **
  ** Original program (C) 1979 by George Blank**
