@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 2.6)
 #set(libs ${CURSES_LIBRARIES})
 
 #external library dependencies
-find_package(curses)
+find_package(Curses)
 
 
 #declares an executable program
