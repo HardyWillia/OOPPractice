@@ -5,10 +5,18 @@
 #include <ctime> //time.h in c
 #include <cstdlib> //stdlib in c
 
+//Include any header files
+#include "intro.hpp"
+
+using namespace std;
+
 int main(){
 
 	std::cout << "Start of game enhancements\n";
 	
+	//Print introductory instructions of the game
+	Introduction introduction;
+	introduction.Intro(); 
 
 
 	return 0;

@@ -1,4 +1,4 @@
-project(santaparavia C)
+project(santaparavia CXX)
 cmake_minimum_required(VERSION 2.6)
 
 ##sets a variable, example
@@ -11,7 +11,7 @@ find_package(Curses)
 #declares an executable program
 add_executable(santaparavia
 
-	paravia.c
+	paravia.cpp
 
 )
 
