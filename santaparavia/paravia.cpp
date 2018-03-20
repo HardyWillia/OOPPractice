@@ -1,5 +1,9 @@
 #include <iostream>
-#include <stdio.h>
+#include <cstdio> //stdio.h in c
+#include <cstring> //string.h in c
+#include <ncurses.h>
+#include <ctime> //time.h in c
+#include <cstdlib> //stdlib in c
 
 int main(){
 
