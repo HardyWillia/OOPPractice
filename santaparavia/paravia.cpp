@@ -7,6 +7,8 @@
 
 //Include any header files
 #include "intro.hpp"
+#include "player.hpp"
+
 
 using namespace std;
 
@@ -17,6 +19,9 @@ int main(){
 	//Print introductory instructions of the game
 	Introduction introduction;
 	introduction.Intro(); 
+
+	Player player;
+	player.Profile();
 
 
 	return 0;
