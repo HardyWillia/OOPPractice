@@ -11,6 +11,14 @@ public:
 
 	int NumOfPlayers, i, level;
 	char name[255];
+	char gender[255];
+	//boolean MorF;
+
+	//Declare female and male titles
+	std::string FemaleTitles[8] = {"Lady", "Baroness", "Countess", "Marquise", "Duchess", "Grand Duchess", 
+					"Princess", "* H.R.H. Queen"};
+	std::string MaleTitles[8] = {"Lord", "Baron", "Count", "Marquis", "Duke", "Grand Duke",
+                                        "Prince", "* H.R.H. King"};
 
 	int Profile(){
 		std::cout << "How many peple want to play? (1 to 6)\n";
@@ -32,9 +40,21 @@ public:
 		
 		//Used to make sure values entered were properly recorded		
 		std::cout << "Your level is: " << level << ". You are playing with " << NumOfPlayers << " player(s)\n";
-	
+
+		
 		//Loop to initialize players if number of players is greater than 1
+		for(i = 0; i < NumOfPlayers; i++){
+			std::cout << "\nWho is the ruler of Santa Paravia (city name here)?\n";
+			std::cin >> name;
+
+			std::cout << "Are you a man or a woman? (M or F)\n";
+                	std::cin >> gender;
 			
+			if(gender[0] == 'm' || gender[0] == 'M')
+				std::cout << "\n" << MaleTitles[0] << " " << name << "\n";
+			else 
+				std::cout << "\n" << FemaleTitles[0] << " " << name << "\n";	
+		}
 			
 	
 	}
