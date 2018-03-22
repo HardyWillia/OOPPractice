@@ -28,8 +28,11 @@ public:
 		if (level < 1)
 		     level = 1;
 		if(level > 4)
-		     level = 4;			
+		     level = 4;
 		
+		//Used to make sure values entered were properly recorded		
+		std::cout << "Your level is: " << level << ". You are playing with " << NumOfPlayers << " player(s)\n";
+	
 		//Loop to initialize players if number of players is greater than 1
 			
 			
