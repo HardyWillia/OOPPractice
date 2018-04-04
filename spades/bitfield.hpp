@@ -28,9 +28,9 @@ enum Suit {
 	Hearts,
 };
 
-enum Color {
-	Black, 
-	Red,
+enum Largeness {
+	Big, 
+	Little,
 };
 
 class Card{
@@ -39,8 +39,8 @@ public:
 	//Default constructor
 	Card() = default;
 
-	Card(Rank r, Suit s, Color c)
-	: bits((unsigned)s << 4 | (unsigned)r | (unsigned)c){}
+	Card(Rank r, Suit s, Largeness l)
+	: bits((unsigned)s << 4 | (unsigned)r | (unsigned)l){}
 
 	Rank get_rank() const {
 		return(Rank)(0b001111 & bits);
@@ -50,8 +50,8 @@ public:
 		return(Suit)((0b110000 & bits) >> 4);
 	}
 
-	Color get_color() const {
-	//	return(Color)(0b000000 & bits);
+	Largeness get_size() const {
+	//	return(Largeness)(0b000000 & bits);
 	}
 
 private:

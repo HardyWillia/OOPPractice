@@ -28,9 +28,9 @@ enum Suit {
 	Hearts,
 };
 
-enum Color {
-	Black, 
-	Red,
+enum Largeness {
+	Big, 
+	Little,
 };
 
 

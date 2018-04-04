@@ -30,7 +30,7 @@ enum Suit {
 	Hearts,
 };
 
-enum Color {
+enum Largeness {
 	Black, 
 	Red,
 };
@@ -62,15 +62,15 @@ private:
 //Class for the Joker that is based on its color
 class JokerCard{
 public:
-	Joker(Color c)
-		: color(c) {}
+	Joker(Largeness l)
+		: size(l) {}
 	
-	Color get_color() const {
-		return color;
+	Largeness get_size() const {
+		return size;
 	}
 
 private:
-	Color color;
+	Largeness size;
 
 };
 
@@ -127,8 +127,8 @@ public:
 	}
 
 	
-	Color get_color() const {
-		return get_joker_card().get_color();
+	Largeness get_size() const {
+		return get_joker_card().get_size();
 	}
 
 private:
