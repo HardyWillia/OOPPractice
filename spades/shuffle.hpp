@@ -10,7 +10,9 @@ int main()
 
 	//declares a deck to be a sequence of cards
 	//Explicitly declares what each card is
-	Deck d1 {
+	BitDeck get_bit_deck() {
+		BitDeck d1{
+
 		//Spades
 		{Ace, Spades}, //Initializes a card object
 		{Two, Spades},
@@ -73,7 +75,8 @@ int main()
                 {King, Hearts},
 		
 	};
-
+	return d1;
+}
 	//int n = rand(); //0...65535 (64K) //Wrong way now
 
 	std::minstd_rand prng; //uniform random bit generator
