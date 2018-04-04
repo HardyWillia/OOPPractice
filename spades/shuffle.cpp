@@ -1,10 +1,12 @@
-#include "card.hpp"
+#include "bitfield.hpp"
 
 int main() 
 {
 
 	//declares an empty vector
 	Deck d0{};
+
+	Card c {Ace, Spades}
 
 	//declares a deck to be a sequence of cards
 	//Explicitly declares what each card is
