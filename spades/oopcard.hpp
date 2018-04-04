@@ -1,5 +1,4 @@
 //Start of object-oriented design card class using an inheritance hierarchy
-//Start of bitfield card class
 
 #include <cassert>
 #include <iosfwd>

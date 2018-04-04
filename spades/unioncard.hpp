@@ -1,9 +1,9 @@
 //Start of discriminated union-based card class
-//Start of object-oriented design card class using an inheritance hierarchy
-//Start of bitfield card class
 
 #include <cassert>
 #include <iosfwd>
+#include <vector>
+
 
 enum Rank {
 
@@ -36,3 +36,103 @@ enum Color {
 };
 
 
+//Class for conditions of a regular card that includes just a Rank and a Suit
+class RegularCard {
+public:
+
+	RegularCard() = default;
+	
+	RegularCard(Rank r, Suit s)
+		: rank(r), suit(s){}
+	
+	Rank get_rank() const{
+		return rank;
+	}
+	
+	Suit get_suit() const{
+		return suit;
+	}
+
+private:
+	Rank rank;
+	Suit suit;
+};
+
+
+//Class for the Joker that is based on its color
+class JokerCard{
+public:
+	Joker(Color c)
+		: color(c) {}
+	
+	Color get_color() const {
+		return color;
+	}
+
+private:
+	Color color;
+
+};
+
+
+//Implemented Card class using discriminated union
+class Card {
+public:
+	enum Kind {
+		Regular,
+		Joker,
+	};
+
+private:
+	union Value{
+		Value(RegularCard c) : rc(c) {}
+		Value(JokerCard c) : jc(c) {}
+
+	RegularCard rc;
+	JokerCard jc;
+	};
+
+public:
+
+	Card(RegularCard c)
+		: kind(Regular), val(c){}
+	Card(JokerCard c)
+		: kind(Joker), val(c){}
+		
+	Kind get_king() const {return kind;}
+	bool is_regular() const { return kind == Regular;}
+	bool is_joker() const { return kind == Joker; }
+
+
+//Assertions
+
+	RegularCard get_regular_card() const {
+		assert(is_regular());
+		return val.rc;
+	}
+
+	JokerCard get_joker_card() const {
+		assert(is_joker());
+		return val.jc;
+	}
+
+
+	Suit get_suit() const {
+		return get_regular_card().get_suit();
+	}
+
+
+	Rank get_rank() const {
+		return get_regular_card().get_rank();
+	}
+
+	
+	Color get_color() const {
+		return get_joker_card().get_color();
+	}
+
+private:
+	Kind kind;
+	Value val;
+};
+	
