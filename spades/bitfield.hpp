@@ -1,7 +1,10 @@
 //Start of bitfield card class
 
+#include "shuffle.hpp"
 #include <cassert>
 #include <iosfwd>
+#include <vector>
+
 
 enum Rank {
 
@@ -33,11 +36,17 @@ enum Largeness {
 	Little,
 };
 
+
 class Card{
 public:
 
 	//Default constructor
 	Card() = default;
+
+	//The bitcard representation is 
+	// jjssrrrr
+	//Before the 2 high order bits were unused, here they are used
+
 
 	Card(Rank r, Suit s, Largeness l)
 	: bits((unsigned)s << 4 | (unsigned)r | (unsigned)l){}
@@ -51,13 +60,16 @@ public:
 	}
 
 	Largeness get_size() const {
-	//	return(Largeness)(0b000000 & bits);
+	//	return(Largeness)(1b000000 & bits); I'm not sure if this is right yet
 	}
 
 private:
 	unsigned char bits;
 
-
-
 };
+
+
+using BitDeck = std::vector<Card>;
+
+BitDeck get_bit_deck();
 
