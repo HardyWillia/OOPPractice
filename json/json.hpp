@@ -7,7 +7,7 @@
 
 struct JClass {
 
-	
+	virtual ~JClass() = default;
 
 };
 
