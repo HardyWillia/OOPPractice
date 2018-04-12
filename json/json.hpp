@@ -17,6 +17,7 @@ enum Type {
 	Object
 };
 
+class JsonValue;
 
 struct JClass {
 public:
