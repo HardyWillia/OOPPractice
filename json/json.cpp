@@ -62,8 +62,9 @@ void skip_space(const char*& first, const char* last) {
 }
 
 /// A helper class that can be used to skip whitespace around a term. /// /// This is called a guard or sentinel 
-class. It executes code *around* /// a region of code. Also called an RAII helper. /// /// RAII -- Resource 
-Acquisition Is Initialization struct space_guard {
+//class. It executes code *around* /// a region of code. Also called an RAII helper. /// /// RAII -- Resource 
+//Acquisition Is Initialization 
+struct space_guard {
   space_guard(const char*& f, const char* l)
     : first(f), last(l)
   {
@@ -78,8 +79,10 @@ Acquisition Is Initialization struct space_guard {
 };
 
 /// Parse a value from a range of characters. 
-Value* parse_value(const char*& first, const char* last); /// 
-Parse the true value. Bool* parse_true(const char*& first, const char* last) {
+Value* parse_value(const char*& first, const char* last); 
+
+///Parse the true value. 
+Bool* parse_true(const char*& first, const char* last) {
   match_literal(first, last, "true");
   return new Bool(true);
 }
@@ -114,6 +117,7 @@ Number* parse_number(const char*& first, const char* last) {
   const char* start = first++;
   while (!is_eof(first, last) && !is_delimiter(first, last))
     ++first;
+  
   // Try to interpret the number as a string.
   std::string str(start, first);
   std::stringstream ss(str);
@@ -224,6 +228,7 @@ Value* parse_value(const char*& first, const char* last)
       throw std::runtime_error("invalid error");
   }
 }
+
 Value* parse(const std::string& str) {
   const char* first = str.c_str();
   const char* last = first + str.size();
