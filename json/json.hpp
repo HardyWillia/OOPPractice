@@ -24,7 +24,8 @@ public:
 	
 	std::vector<JClass> array;
 	std::map<std::string, JClass> object;
-
+	
+	//Constructors for each types of a JSON value
 	JClass(int value);
 	JClass(double value);
 	JClass(bool value);
@@ -35,6 +36,7 @@ public:
 
 	JClass(void *) = delete;
 
+	//Accessor
 	Type type() const;
 	
 	bool is_none() const { return type() = None; }
@@ -44,17 +46,27 @@ public:
 	bool is_array() const { return type() = Array; }
 	bool is_object() const { return type() = Object; }
 	
+	//Return the value if it is a number type
 	double number_value() const;
 	int int_value() const;
+	
+	//Return the value if it is a boolean
 	bool bool_value() const;
+	
+	//Return the value if it is a string
 	const std::string &string_value() const;
+
+	//Return the value if the vector is an array
 	const array &array_items() const;
+
+	//Return the value if the map is an object
 	const object &object_items() const;
 
 	//Return a reference to the key of the object
 	const JClass & operator[](const std::string &key) const;
 
-
+	//Parse through the JSON
+	//TODO: write this part
 	
 };
 
