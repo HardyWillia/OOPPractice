@@ -12,17 +12,20 @@
 
 using namespace std;
 
-int main(){
+int main(int argc, char* argv[]){
 
 	std::cout << "Start of game enhancements\n";
 	
 	//Print introductory instructions of the game
 	Introduction introduction;
 	introduction.Intro(); 
-
-	Player player;
-	player.Profile();
-
+	
+	//Player profiles
+	
+	Player *p = new PlayerProfile;
+	Player *p1 = new InitializePlayer;
+	p->profile();
+	p->initplayer();
 
 	return 0;
 }

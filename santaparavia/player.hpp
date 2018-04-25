@@ -20,7 +20,15 @@ public:
 	std::string MaleTitles[8] = {"Lord", "Baron", "Count", "Marquis", "Duke", "Grand Duke",
                                         "Prince", "* H.R.H. King"};
 
-	int Profile(){
+	virtual ~Player() = default;
+
+	virtual void initplayer() { }
+	virtual int profile() { }
+};
+
+struct PlayerProfile : public Player {
+	
+	int profile() {
 		std::cout << "How many peple want to play? (1 to 6)\n";
 		std::cin >> NumOfPlayers;
 
@@ -59,9 +67,51 @@ public:
 	
 	}
 
-	//~Player(){} not used yet
+	Player* p1;
 
+};
 
+struct InitializePlayer : public Player {
+	
+	void initplayer() {
+		//p1 -> initplayer();
+
+		//Initialize all variables for the first creation of player properties
+		int Cathedral = 0;
+		int Clergy = 5;
+		int CustomsDuty = 25;
+		int Difficulty = level;
+		int GrainPrice = 25;
+		int GrainReserve = 5000;
+		int IncomeTax = 5;
+		int Justice = 2;
+		int Land = 10000;
+		float LandPrice = 10.0;
+		int Marketplace = 0;
+		int Merchants = 25;
+		int Mills = 0;
+		int Nobles = 4;
+		int OldTitle = 1; //may change this
+		int Palace = 0;
+		float PublicWorks = 1.0;
+		int SalesTax = 10;
+		int Serfs = 2000;
+		int Soldiers = 25;
+		int TitleNum = 1; //may change this
+		int Treasury = 1000;
+		bool isBankrupt = false;
+		bool isDead = false;
+		bool iWon = false;
+
+		//Death condition
+		int YearOfDeath = year + 20 + rand() % 36; 
+
+		return;
+	}
+		
+	int year;
+	//int level;
+	//int city;
 
 };
 
