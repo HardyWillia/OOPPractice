@@ -7,8 +7,7 @@
 
 struct Purchase {
 public:
-
-	int Treasury = 1000;
+	Purchase() : Treasury(1000) {}
 
 	virtual ~Purchase() = default;
 	virtual void cathedral() { }
@@ -18,20 +17,25 @@ public:
 	virtual void mill() { }
 	virtual void palace() { }
 	virtual void soldiers() { }
+
+
+protected:
+	int Treasury;
 };
 
 struct BuyCathedral : public Purchase {
-	
+
 	int Cathedral = 0;
 	int Clergy = 5;
 	float PublicWorks = 1.0;
- 
+
 	void cathedral() {
-	
+
 		Cathedral += 1;
 		Clergy = rand() % 7;
 		PublicWorks += 1.0;
-		Treasury -= 5000;
+		int t = Purchase::Treasury;
+		t -= 5000;
 
 		return;
 	}
@@ -40,9 +44,8 @@ struct BuyCathedral : public Purchase {
 
 struct BuyGrain : public Purchase {
 
-	int grains;
-	int GrainReserve;
-	int GrainPrice;
+public:
+	BuyGrain(int g, int r, int p) : grains(g), GrainReserve(r), GrainPrice(p) {}
 
 	void grain() {
 		std::cout << "How much grain do you want to buy?: ";
@@ -53,30 +56,44 @@ struct BuyGrain : public Purchase {
 		std::cin >> grains;
 	}
 
-	Treasury -= (grains * GrainPrice / 1000);
+	int t = Purchase::Treasury;
+	t -= (grains * GrainPrice / 1000);
 	GrainReserve += grains;
 	return;
 	}
 
-	void sellG(){ }
+protected:
+
+	int grains;
+	int GrainReserve;
+	int GrainPrice;
 
 
 };
 
 //Selling functionality.
-// TODO: derive this from BuyGrain class
+// TODO: derive this from BuyGrain class. done.
 struct SellGrain : BuyGrain {
 	using BuyGrain::BuyGrain;
 
-	void sellG() const {
-		std::cout << "This function sells the grain";
-	 }
+	void sellG() {
+		std::cout << "How much grain would you like to sell?: ";
+		std::cin >> BuyGrain::grains;
+
+		if(BuyGrain::grains > BuyGrain::GrainReserve){
+			std::cout << "You do not have to sell any grains\n";
+		}
+	int t = Purchase::Treasury;
+	t += (BuyGrain::grains * BuyGrain::GrainPrice / 1000);
+	BuyGrain::GrainReserve -= BuyGrain::grains;
+
+	return;
+	}
 };
 
 struct BuyLand : public Purchase {
 	void land() {}
 
-	void sellL() { }
 };
 
 //Selling functionality.
