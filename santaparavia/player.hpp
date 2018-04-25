@@ -67,14 +67,11 @@ struct PlayerProfile : public Player {
 	
 	}
 
-	Player* p1;
-
 };
 
 struct InitializePlayer : public Player {
 	
 	void initplayer() {
-		//p1 -> initplayer();
 
 		//Initialize all variables for the first creation of player properties
 		int Cathedral = 0;
@@ -112,7 +109,7 @@ struct InitializePlayer : public Player {
 	int year;
 	//int level;
 	//int city;
-
 };
+
 
 #endif
