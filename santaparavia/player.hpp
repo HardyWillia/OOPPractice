@@ -29,7 +29,7 @@ public:
 struct PlayerProfile : public Player {
 	
 	int profile() {
-		std::cout << "How many peple want to play? (1 to 6)\n";
+		std::cout << "How many people want to play? (1 to 6)\n";
 		std::cin >> NumOfPlayers;
 
 		if (NumOfPlayers < 1 || NumOfPlayers > 6){

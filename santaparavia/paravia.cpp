@@ -8,6 +8,7 @@
 //Include any header files
 #include "intro.hpp"
 #include "player.hpp"
+#include "purchases.hpp"
 
 
 using namespace std;
@@ -20,12 +21,15 @@ int main(int argc, char* argv[]){
 	Introduction introduction;
 	introduction.Intro(); 
 	
-	//Player profiles
-	
+	//Player Information
 	Player *p = new PlayerProfile;
 	Player *p1 = new InitializePlayer;
 	p->profile();
-	p->initplayer();
+	p1->initplayer();
+
+	//Purchasing/Selling Items
+	Purchase *c = new BuyCathedral;
+	c->cathedral();
 
 	return 0;
 }
