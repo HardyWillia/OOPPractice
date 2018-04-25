@@ -24,10 +24,33 @@ struct BuyCathedral : public Purchase {
 
 struct BuyGrain : public Purchase {
 	void grain() {}
+
+	void sellG(){ }
+};
+
+//Selling functionality.
+// TODO: derive this from BuyGrain class
+struct SellGrain : BuyGrain {
+	using BuyGrain::BuyGrain;
+
+	void sellG() const {
+		std::cout << "This function sells the grain";
+	 }
 };
 
 struct BuyLand : public Purchase {
 	void land() {}
+
+	void sellL() { }
+};
+
+//Selling functionality.
+// TODO: derive this from BuyLand class
+struct SellLand : BuyLand {
+	using BuyLand::BuyLand;
+	void sellL() const {
+		std::cout << "This function sells the land";
+	}
 };
 
 struct BuyMarket : public Purchase {
