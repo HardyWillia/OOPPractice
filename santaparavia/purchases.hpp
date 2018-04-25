@@ -7,6 +7,9 @@
 
 struct Purchase {
 public:
+
+	int Treasury = 1000;
+
 	virtual ~Purchase() = default;
 	virtual void cathedral() { }
 	virtual void grain() { }
@@ -18,14 +21,46 @@ public:
 };
 
 struct BuyCathedral : public Purchase {
-	void cathedral() {}
+	
+	int Cathedral = 0;
+	int Clergy = 5;
+	float PublicWorks = 1.0;
+ 
+	void cathedral() {
+	
+		Cathedral += 1;
+		Clergy = rand() % 7;
+		PublicWorks += 1.0;
+		Treasury -= 5000;
+
+		return;
+	}
 
 };
 
 struct BuyGrain : public Purchase {
-	void grain() {}
+
+	int grains;
+	int GrainReserve;
+	int GrainPrice;
+
+	void grain() {
+		std::cout << "How much grain do you want to buy?: ";
+		std::cin >> grains;
+		assert(grains > 0);
+	if(grains < 0){
+		std::cout << "Invalid total amount, please enter a new amount: ";
+		std::cin >> grains;
+	}
+
+	Treasury -= (grains * GrainPrice / 1000);
+	GrainReserve += grains;
+	return;
+	}
 
 	void sellG(){ }
+
+
 };
 
 //Selling functionality.

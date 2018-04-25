@@ -4,6 +4,7 @@
 #include <ncurses.h>
 #include <ctime> //time.h in c
 #include <cstdlib> //stdlib in c
+#include <assert.h>
 
 //Include any header files
 #include "intro.hpp"
