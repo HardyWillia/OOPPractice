@@ -30,7 +30,13 @@ int main(int argc, char* argv[]){
 
 	//Purchasing/Selling Items
 	Purchase *c = new BuyCathedral;
+	Purchase *g = new BuyGrain(500, 5000, 25);
+//	Purchase *sg = new SellGrain;
+	Purchase *l = new BuyLand(2, 1000, 10);
 	c->cathedral();
+	g->grain();
+//	sg->sellG();
+	l->land();
 
 	return 0;
 }
