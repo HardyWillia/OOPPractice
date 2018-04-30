@@ -7,7 +7,7 @@
 
 struct Purchase {
 public:
-	Purchase() : Treasury(1000) {}
+	Purchase() : Treasury(1000), PublicWorks(1.0) {}
 
 	virtual ~Purchase() = default;
 	virtual void cathedral() { }
@@ -16,29 +16,30 @@ public:
 	virtual void market() { }
 	virtual void mill() { }
 	virtual void palace() { }
-	virtual void soldiers() { }
+	virtual void soldier() { }
 
 
 protected:
 	int Treasury;
+	float PublicWorks;
 };
 
 struct BuyCathedral : public Purchase {
-
 	int Cathedral = 0;
 	int Clergy = 5;
-	float PublicWorks = 1.0;
 
 	void cathedral() {
 
 		Cathedral += 1;
 		Clergy = rand() % 7;
-		PublicWorks += 1.0;
+		float p = Purchase::PublicWorks;
+		p += 1.0;
 		int t = Purchase::Treasury;
 		t -= 5000;
 
 		return;
 	}
+
 
 };
 
@@ -126,20 +127,67 @@ struct SellLand : BuyLand {
 };
 
 struct BuyMarket : public Purchase {
-	void market() {}
+
+	int Marketplace = 0;
+	int Merchants = 25;
+
+	void market() {
+		Marketplace += 1;
+		Merchants += 5;
+		int t = Purchase::Treasury;
+		t -= 1000;
+		float p = Purchase::PublicWorks;
+		p += 1.0;
+
+	return;
+	}
 };
 
 struct BuyMill : public Purchase {
-	void mill() {}
+
+	int Mills = 0;
+
+	void mill() {
+		Mills += 1;
+		int t = Purchase::Treasury;
+		float p = Purchase::PublicWorks;
+		t -= 2000;
+		p += 0.25;
+
+	return;
+
+	}
 };
 
 struct BuyPalace : public Purchase {
-	void palace() {}
+	int Palaces = 0;
+	int Nobles = 4;
+	void palace() {
+		Palaces += 1;
+		Nobles = rand() % 3;
+		int t = Purchase::Treasury;
+		float p = Purchase::PublicWorks;
+		t -= 3000;
+		p += 0.5;
+
+	return;
+
+	}
 
 };
 
-struct BuySoldiers : public Purchase {
-	void soldiers() {}
+struct BuySoldier : public Purchase {
+	int Soldiers = 25;
+	int Serfs = 2000;
+
+	void soldier() {
+		Soldiers += 20;
+		Serfs -= 20;
+		int t = Purchase::Treasury;
+		t -= 500;
+
+	return;
+	}
 };
 
 #endif
