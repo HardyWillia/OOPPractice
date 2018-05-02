@@ -27,6 +27,8 @@ struct AddRevenue : public Generate {
 	using Generate::Generate;
 
 	bool isBankrupt = false;
+
+	//TODO: Make sure this works for calling the functions
 	//int t = Generate::Treasury;
 	//int jr = Generate::JusticeRevenue;
 	//int cdr = Generate::CustomsDutyRevenue;
@@ -63,22 +65,15 @@ struct GenHarvest : public Generate {
 
 //Generate final income 
 struct GenIncome : public Generate {
-
-	int JusticeRevenue;
-	int CustomsDutyRevenue;
-	int SalesTaxRevenue;
-	int IncomeTaxRevenue;
+	using Generate::Generate;
 
 	int Justice = 2;
-	int TitleNum = 1;
 	int SalesTax = 10;
 	int CustomsDuty = 25;
 	int IncomeTax = 5;
 	int nobles = 4;
 	int clergy = 5;
 	int merchants = 25;
-
-	float PublicWorks = 1.0;
 
 	void income(){
 		float y;
