@@ -11,8 +11,13 @@
 #include "player.hpp"
 #include "purchases.hpp"
 #include "generate.hpp"
+#include "others.hpp"
 
 using namespace std;
+
+//Functions to carry out the behavior of the game
+void PlayGame(){}
+void ImDead(){}
 
 int main(int argc, char* argv[]){
 

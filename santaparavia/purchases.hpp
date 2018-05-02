@@ -190,4 +190,17 @@ struct BuySoldier : public Purchase {
 	}
 };
 
+//Other classes to implement
+
+struct NewLandAndGrainPrices {};
+
+struct PrintGrain {};
+
+struct ReleaseGrain {};
+
+struct BuySellGrain {};
+
+struct AdjustTax {};
+
+struct StatePurchase {};
 #endif

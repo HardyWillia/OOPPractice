@@ -42,6 +42,10 @@ public:
 
 	//~Intro() {} --not using this properly yet
 
+};
+
+struct ShowStats {
+
 
 };
 
