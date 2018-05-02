@@ -10,7 +10,7 @@
 #include "intro.hpp"
 #include "player.hpp"
 #include "purchases.hpp"
-
+#include "generate.hpp"
 
 using namespace std;
 
