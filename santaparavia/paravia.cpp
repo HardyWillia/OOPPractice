@@ -36,13 +36,32 @@ int main(int argc, char* argv[]){
 	//Purchasing/Selling Items
 	Purchase *c = new BuyCathedral;
 	Purchase *g = new BuyGrain(500, 5000, 25);
-	Purchase *sg = new SellGrain;
+	//BuyGrain *sg = new SellGrain;
+	//BuyLand *bl  new SellLand;
 	Purchase *l = new BuyLand(2, 1000, 10);
-	//Purchase *
+	Purchase *mark = new BuyMarket;
+	Purchase *mil = new BuyMill;
+	Purchase *pal = new BuyPalace;
+	Purchase *s = new BuySoldier;
 	c->cathedral();
 	g->grain();
-	sg->sellG();
+	//sg->sellG();
+	//bl->sellL();
 	l->land();
+	mark->market();
+	mil->mill();
+	pal->palace();
+	s->soldier();
+
+
+	//Generate Income
+	Generate *ar = new AddRevenue;
+	Generate *gh = new GenHarvest;
+	Generate *gi = new GenIncome;
+
+	ar->revenue();
+	gh->harvest();
+	gi->income();
 
 	return 0;
 }

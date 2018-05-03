@@ -51,7 +51,7 @@ public:
 	void grain() {
 		std::cout << "How much grain do you want to buy?: ";
 		std::cin >> grains;
-		assert(grains > 0);
+		assert(grains >= 0);
 	if(grains < 0){
 		std::cout << "Invalid total amount, please enter a new amount: ";
 		std::cin >> grains;
@@ -103,7 +103,7 @@ public:
 	void land() {
 		std::cout << "How much land do you want to buy?:";
 		std::cin >> lands;
-		assert(lands > 0);
+		assert(lands >= 0);
 
 	Treasury -= (int)(((float)lands * LandPrice));
 
@@ -129,6 +129,7 @@ struct SellLand : BuyLand {
 };
 
 struct BuyMarket : public Purchase {
+	using Purchase::Purchase;
 
 	int Marketplace = 0;
 	int Merchants = 25;
@@ -136,25 +137,22 @@ struct BuyMarket : public Purchase {
 	void market() {
 		Marketplace += 1;
 		Merchants += 5;
-		int t = Purchase::Treasury;
-		t -= 1000;
-		float p = Purchase::PublicWorks;
-		p += 1.0;
+		Treasury -= 1000;
+		PublicWorks += 1.0;
 
 	return;
 	}
 };
 
 struct BuyMill : public Purchase {
+	using Purchase::Purchase;
 
 	int Mills = 0;
 
 	void mill() {
 		Mills += 1;
-		int t = Purchase::Treasury;
-		float p = Purchase::PublicWorks;
-		t -= 2000;
-		p += 0.25;
+		Treasury -= 2000;
+		PublicWorks += 0.25;
 
 	return;
 
@@ -162,15 +160,15 @@ struct BuyMill : public Purchase {
 };
 
 struct BuyPalace : public Purchase {
+	using Purchase::Purchase;
+
 	int Palaces = 0;
 	int Nobles = 4;
 	void palace() {
 		Palaces += 1;
 		Nobles = rand() % 3;
-		int t = Purchase::Treasury;
-		float p = Purchase::PublicWorks;
-		t -= 3000;
-		p += 0.5;
+		Treasury -= 3000;
+		PublicWorks += 0.5;
 
 	return;
 
@@ -179,14 +177,15 @@ struct BuyPalace : public Purchase {
 };
 
 struct BuySoldier : public Purchase {
+	using Purchase::Purchase;
+
 	int Soldiers = 25;
 	int Serfs = 2000;
 
 	void soldier() {
 		Soldiers += 20;
 		Serfs -= 20;
-		int t = Purchase::Treasury;
-		t -= 500;
+		Treasury -= 500;
 
 	return;
 	}

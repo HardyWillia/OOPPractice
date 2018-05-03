@@ -10,6 +10,7 @@ public:
 	Generate() : Treasury(1000), PublicWorks(1.0), SalesTaxRevenue(), IncomeTaxRevenue(), JusticeRevenue(),
 	CustomsDutyRevenue(), TitleNum(1){}
 	virtual ~Generate() = default;
+	virtual void revenue() {}
 	virtual void harvest() {}
 	virtual void income() {}
 
@@ -27,13 +28,6 @@ struct AddRevenue : public Generate {
 	using Generate::Generate;
 
 	bool isBankrupt = false;
-
-	//TODO: Make sure this works for calling the functions
-	//int t = Generate::Treasury;
-	//int jr = Generate::JusticeRevenue;
-	//int cdr = Generate::CustomsDutyRevenue;
-	//int itr = Generate::IncomeTaxRevenue;
-	//int str = Generate::SalesTaxRevenue;
 
 	void revenue() {
 		Treasury += JusticeRevenue + CustomsDutyRevenue;
@@ -81,6 +75,7 @@ struct GenIncome : public Generate {
 		int revenues = 0;
 
 		JusticeRevenue = (Justice * 300 - 500) * TitleNum;
+		std::cout << "Select your justice (1-4): ";
 		std::cin >> just;
 
 		//Type of justice determined by the user
@@ -114,8 +109,8 @@ struct GenIncome : public Generate {
 		revenues = CustomsDutyRevenue + SalesTaxRevenue + IncomeTaxRevenue + JusticeRevenue;
 
 		std::cout << "State revenues " << revenues << " gold florins.\n";
-		std::cout << "Customs Duty \t Sales Tax \t Income Tax \t Justice";
-		std::cout << CustomsDutyRevenue << "\t\t" << SalesTaxRevenue << "\t\t" << IncomeTaxRevenue << "\t\t" << JusticeRevenue << "\t\t" << just << "\n";
+		std::cout << "Customs Duty \t Sales Tax \t Income Tax \t Justice\n";
+		std::cout << CustomsDutyRevenue << " \t\t " << SalesTaxRevenue << " \t\t " << IncomeTaxRevenue << " \t\t " << JusticeRevenue << " \t\t " << just << " \n ";
 
 		return;
 
