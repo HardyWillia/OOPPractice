@@ -12,6 +12,7 @@ public:
 	virtual ~Purchase() = default;
 	virtual void cathedral() { }
 	virtual void grain() { }
+	virtual void sellG() {}
 	virtual void land() { }
 	virtual void market() { }
 	virtual void mill() { }
@@ -25,6 +26,7 @@ protected:
 };
 
 struct BuyCathedral : public Purchase {
+	using Purchase::Purchase;
 	int Cathedral = 0;
 	int Clergy = 5;
 
@@ -32,11 +34,8 @@ struct BuyCathedral : public Purchase {
 
 		Cathedral += 1;
 		Clergy = rand() % 7;
-		float p = Purchase::PublicWorks;
-		p += 1.0;
-		int t = Purchase::Treasury;
-		t -= 5000;
-
+		PublicWorks += 1.0;
+		Treasury -= 5000;
 		return;
 	}
 
@@ -44,10 +43,11 @@ struct BuyCathedral : public Purchase {
 };
 
 struct BuyGrain : public Purchase {
-
+	using Purchase::Purchase;
 public:
 	BuyGrain(int g, int r, int p) : grains(g), GrainReserve(r), GrainPrice(p) {}
 
+	virtual void sellG() {}
 	void grain() {
 		std::cout << "How much grain do you want to buy?: ";
 		std::cin >> grains;
@@ -57,13 +57,11 @@ public:
 		std::cin >> grains;
 	}
 
-	int t = Purchase::Treasury;
-	t -= (grains * GrainPrice / 1000);
+	Treasury -= (grains * GrainPrice / 1000);
 	GrainReserve += grains;
 	return;
 	}
 
-protected:
 
 	int grains;
 	int GrainReserve;
@@ -74,7 +72,8 @@ protected:
 
 //Selling functionality.
 // TODO: derive this from BuyGrain class. done.
-struct SellGrain : BuyGrain {
+struct SellGrain : public BuyGrain {
+	using Purchase::Purchase;
 	using BuyGrain::BuyGrain;
 
 	void sellG() {
@@ -84,15 +83,19 @@ struct SellGrain : BuyGrain {
 		if(BuyGrain::grains > BuyGrain::GrainReserve){
 			std::cout << "You do not have to sell any grains.\n";
 		}
-	int t = Purchase::Treasury;
-	t += (BuyGrain::grains * BuyGrain::GrainPrice / 1000);
-	BuyGrain::GrainReserve -= BuyGrain::grains;
+	//int t = Purchase::Treasury;
+	//t += (BuyGrain::grains * BuyGrain::GrainPrice / 1000);
+	//BuyGrain::GrainReserve -= BuyGrain::grains;
+
+	Treasury += (grains * GrainPrice / 1000);
+	GrainReserve -= grains;
 
 	return;
 	}
 };
 
 struct BuyLand : public Purchase {
+	using Purchase::Purchase;
 public:
 	BuyLand(int l, int lr, int lp) : lands(l), LandReserve(lr), LandPrice(lp) { }
 
@@ -102,8 +105,7 @@ public:
 		std::cin >> lands;
 		assert(lands > 0);
 
-	int t = Purchase::Treasury;
-	t -= (int)(((float)lands * LandPrice));
+	Treasury -= (int)(((float)lands * LandPrice));
 
 	return;
 
