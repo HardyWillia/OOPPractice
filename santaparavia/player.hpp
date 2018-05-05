@@ -27,7 +27,7 @@ public:
 };
 
 struct PlayerProfile : public Player {
-	
+
 	int profile() {
 		std::cout << "How many people want to play? (1 to 6)\n";
 		std::cin >> NumOfPlayers;
@@ -35,21 +35,21 @@ struct PlayerProfile : public Player {
 		if (NumOfPlayers < 1 || NumOfPlayers > 6){
 			std::cout << "You do not have a sufficient number of players. Thanks for playing!\n\n";
 			std::cin.ignore();
-		} 
-	
+		}
+
 		std::cout << "What will be the difficulty of this game? \n 1. Apprentice \n";
 		std::cout << " 2. Journeyman\n 3. Master\n 4. Grand Master\n\n Choose (1, 2, 3, or 4): ";
 		std::cin >> level;
-		
+
 		if (level < 1)
 		     level = 1;
 		if(level > 4)
 		     level = 4;
-		
+
 		//Used to make sure values entered were properly recorded		
 		std::cout << "Your level is: " << level << ". You are playing with " << NumOfPlayers << " player(s)\n";
 
-		
+
 		//Loop to initialize players if number of players is greater than 1
 		for(i = 0; i < NumOfPlayers; i++){
 			std::cout << "\nWho is the ruler of Santa Paravia (city name here)?\n";
@@ -57,20 +57,20 @@ struct PlayerProfile : public Player {
 
 			std::cout << "Are you a man or a woman? (M or F)\n";
                 	std::cin >> gender;
-			
+
 			if(gender[0] == 'm' || gender[0] == 'M')
 				std::cout << "\n" << MaleTitles[0] << " " << name << "\n";
-			else 
+			else
 				std::cout << "\n" << FemaleTitles[0] << " " << name << "\n";	
 		}
-			
-	
+
+
 	}
 
 };
 
 struct InitializePlayer : public Player {
-	
+
 	void initplayer() {
 
 		//Initialize all variables for the first creation of player properties
@@ -101,15 +101,38 @@ struct InitializePlayer : public Player {
 		bool iWon = false;
 
 		//Death condition
-		int YearOfDeath = year + 20 + rand() % 36; 
+		int YearOfDeath = year + 20 + rand() % 36;
 
 		return;
 	}
-		
+
 	int year;
 	//int level;
 	//int city;
 };
 
+
+struct ChangeTitle : public Player {
+	using Player::Player;
+
+	int TitleNum = 1;
+	std::string Title[15];
+	bool IWon = false;
+
+	void change(){
+	if(gender[0] == 'M' || gender[0] == 'm')
+		Title[0] = MaleTitles[TitleNum];
+	else
+		Title[0] = FemaleTitles[TitleNum];
+
+	if(TitleNum == 7){
+		IWon = true;
+		return;
+	}
+
+	return;
+	}
+
+};
 
 #endif
