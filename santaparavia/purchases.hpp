@@ -3,7 +3,7 @@
 #ifndef PURCHASES_H
 #define PURCHASES_H
 
-
+#include "player.hpp"
 
 struct Purchase {
 public:
@@ -18,6 +18,7 @@ public:
 	virtual void mill() { }
 	virtual void palace() { }
 	virtual void soldier() { }
+	virtual bool checktitle() {}
 
 
 protected:
@@ -101,7 +102,7 @@ public:
 
 
 	void land() {
-		std::cout << "How much land do you want to buy?:";
+		std::cout << "How much land do you want to buy?: ";
 		std::cin >> lands;
 		assert(lands >= 0);
 
@@ -110,7 +111,7 @@ public:
 	return;
 
 	}
-	
+
 
 protected:
 	int lands;
@@ -190,7 +191,39 @@ struct BuySoldier : public Purchase {
 	return;
 	}
 };
+/*
+struct CheckNewTitle : public Purchase{
+	using Purchase::Purchase;
 
+	int limit10(int num, int denom) {
+
+		int val;
+		val = num/denom;
+		assert(denom != 0);
+		return(val > 10 ? 10 : val);
+
+	}
+
+	bool checktitle(){
+		int Total;
+		/* Tally up our success so far . . . . */
+		/*Total = limit10(Marketplaces, 1);
+		Total += limit10(Palace, 1);
+		Total += limit10(Cathedral, 1);
+		Total += limit10(Mills, 1);
+		Total += limit10(Treasury, 5000);
+		Total += limit10(Land, 6000);
+		Total += limit10(Merchants, 50);
+		Total += limit10(Nobles, 5);
+		Total += limit10(Soldiers, 50);
+		Total += limit10(Clergy, 10);
+		Total += limit10(Serfs, 2000);
+		Total += limit10((int)(PublicWorks * 100.0), 500);
+*/
+		//TitleNum = (Total / level) - Justice;
+	}
+};
+*/
 //Other classes to implement
 
 struct NewLandAndGrainPrices {};

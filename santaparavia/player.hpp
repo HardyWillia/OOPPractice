@@ -111,7 +111,6 @@ struct InitializePlayer : public Player {
 	//int city;
 };
 
-
 struct ChangeTitle : public Player {
 	using Player::Player;
 

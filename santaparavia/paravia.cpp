@@ -63,5 +63,7 @@ int main(int argc, char* argv[]){
 	gh->harvest();
 	gi->income();
 
+	SeizeAssets assets;
+	assets.seize();
 	return 0;
 }

@@ -1,15 +1,5 @@
 //Place for classes that I cannot find commonalities between
 
-int limit10(int num, int denom) {
-
-	int val;
-	val = num/denom;
-	assert(denom != 0);
-	return(val > 10 ? 10 : val);
-
-}
-
-struct CheckNewTitle {};
 
 struct SerfsProcreating {
 	int absc;
@@ -57,9 +47,9 @@ struct SeizeAssets{
 	int Treasury = 100;
 	bool isBankrupt = false;
 	char goahead[256];
-	
+
 	void seize(){
-	std::cout << "You are bankrupt\n";
+	std::cout << "\n\nYou are bankrupt\n";
 	std::cout << "\nCreditors have seized much of your assets.\n";
 	std::cout << "Press y to continue: ";
 	std::cin >> goahead;
