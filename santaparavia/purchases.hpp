@@ -4,6 +4,7 @@
 #define PURCHASES_H
 
 #include "player.hpp"
+#include "generate.hpp"
 
 struct Purchase {
 public:
@@ -122,10 +123,25 @@ protected:
 
 //Selling functionality.
 // TODO: derive this from BuyLand class
-struct SellLand : BuyLand {
+struct SellLand{
+	using Purchase::Purchase;
 	using BuyLand::BuyLand;
-	void sellL() const {
-		std::cout << "This function sells the land";
+	void sellL() {
+		char string[256];
+		int HowMuch;
+		cout << "How much land do you want to sell?: ";
+		cin >> string;
+	
+		HowMuch = string;
+
+		if(HowMuch > (Land - 5000)){
+			cout << "You can't sell that much\n";
+			return;
+		}
+
+		Land -= HowMuch;
+		Treasury += (int)(((float)HowMuch * LandPrice));
+		return;
 	}
 };
 
@@ -192,8 +208,16 @@ struct BuySoldier : public Purchase {
 	}
 };
 /*
-struct CheckNewTitle : public Purchase{
+struct CheckNewTitle{
 	using Purchase::Purchase;
+	using BuyGrain::BuyGrain;
+	using BuyLand::BuyLand;
+	using BuyCathedral::BuyCathedral;
+	using BuyMarket::BuyMarket;
+	using BuyMill::BuyMill;
+	using BuyPalace::BuyPalace;
+	using BuySoldier::BuySoldier;
+	
 
 	int limit10(int num, int denom) {
 
@@ -226,11 +250,229 @@ struct CheckNewTitle : public Purchase{
 */
 //Other classes to implement
 
-struct NewLandAndGrainPrices {};
+struct NewLandAndGrainPrices {
+	using Purchase::Purchase;
+	using BuyGrain::BuyGrain;
+	using BuyCathedral::BuyCathedral;
+	using BuySoldier::BuySoldier;
 
-struct PrintGrain {};
+	float x, y, MyRandom;
+	int h, GrainDemand, RatsAte;
 
-struct ReleaseGrain {};
+	void newprices(){
+		MyRandom = (float)((float)rand() / (float)RAND_MAX);
+
+		x = (float)Land;
+		y = (((float)Serfs - (float)Mills) * 100) * 5.0;
+
+		if(y < 0.0)
+			x = y;
+		y = (float)GrainReserve * 2.0;
+
+		if(y < x)
+			x = 7;
+		y = (float)Harvest + (MyRandom - 0.5);
+
+		GrainReserve += h;
+		GrainDemand += (Nobles * 100) + (Cathedral * 40) + (Merchants * 30);
+		GrainDemand += ((Soldiers * 10) + (Serfs * 5));
+		LandPrice = (3.0 * (float)Harvest + (float)rand() % 6 + 10.0) / 10.0;
+
+		if(h < 0)
+			h *= -1;
+		if (h < 1)
+			y = 2.0;
+		else {
+			y = (float)((float)GrainDemand / (float)h);
+			if(y > 2.0)
+				y = 2.0;
+		}
+
+		if(y < 0.8)
+			y = 0.8;
+
+		LandPrice *= y;
+		
+		if(LandPrice < 1.0)
+			LandPrice = 1.0;
+
+		GrainPrice = (int)(((6.0 - (float)Harvest) * 3.0 + (float)rand() & 5 + (float)rand() % 5) * 4.0 * y);
+
+		RatsAte = h;
+
+		return;
+		}
+
+};
+
+struct PrintGrain {
+	int Harvest;
+
+	void grainprint(){
+
+		switch(Harvest){
+
+			case 0:
+			case 1: printf("Drought. Famine Threatens. "); break;
+			case 2: printf("Bad Weather. Poor Harvest. "); break;
+			case 3: printf("Normal Weather. Average Harvest. "); break;
+			case 4: printf("Good Weather. Fine Harvest. "); break;
+			case 5: printf("Excellent Weather. Great Harvest! "); break;
+		}
+
+	return;
+	}
+
+};
+
+struct ReleaseGrain {
+	using BuyGrain::BuyGrain;
+	using BuySoldier::BuySoldier;
+	using BuyMarket::BuyMarket;
+	using Generate::Generate;
+
+	int TransplantedSers, FleeingSerfs;
+	bool InvadeMe;
+	
+	int release(){
+		double xp, zp;
+		float x, z;
+		char string[256];
+
+		int HowMuch, Maximum, Minimum;
+		bool isOK = false;
+		Minimum = GrainReserve / 5;
+		Maximum = GrainReserve - Minimum;
+
+		while(isOK == false){
+
+			cout << "How much grain will you release for consumption?\n";
+			cout << "1 = Minimum " << Minimum << " 2 = Maximum " << Maximum << "or enter a value: ";
+			cin >> string;
+
+			HowMuch = string;
+
+		if(HowMuch == 1)
+			HowMuch = Minimum;
+		if(HowMuch == 2)
+			HowMuch = Maximum;
+		if(HowMuch < Minimum)
+			cout << "You must release at least 20% of your reserves.\n";
+		else if (HowMuch > Maximum)
+			cout << "You must keep at least 20%.\n";
+		else
+			isOK = true;
+		}
+		
+		SoldierPay = MarketRevenue = NewSerfs = DeadSerfs = 0;
+		TransplantedSerfs = FleeingSerfs = 0;
+		InvadeMe = false;
+		GrainReserve -= HowMuch;
+
+		z = (float)HowMuch / (float)GrainDemand - 1.0;
+
+		if(z > 0.0)
+			z /= 2.0;
+		if(z > 0.25)
+			z = z / 10.0 + 0.25;
+
+		zp = 50.0 - (double)CustomsDuty - (double)SalesTax - (double)IncomeTax;
+
+		if(zp < 0.0)
+			zp += (3.0 - (double)Justice);
+		z += ((float)zp / 10.0);
+
+		if(z > 0.5)
+			z = 0.5;
+		if(HowMuch < (GrainDemand - 1)){
+			x = ((float)GrainDemand - (float)HowMuch) / (float)GrainDemand * 100.0 - 9.0;
+			xp = (double)x;
+
+			if(x > 65.0)
+				x = 65.0;
+			if(x < 0.0){
+				xp = 0.0;
+				x = 0.0;
+			}
+
+			procreating(3.0);
+			decomposing(xp + 8.0);
+		}
+
+		else {
+
+			procreating(7.0);
+			decomposing(3.0);
+	
+		if((CustomsDuty + SalesTax) < 35) Merchants += rand() % 4;
+		if(IncomeTax < rand() % 28){
+
+			Nobles += rand() % 2;
+			Clergy += rand() % 3;
+		}
+		
+
+		if(HowMuch > (int)((float)GrainDemand * 1.3)){
+			zp = (double)Serfs / 1000.0;
+			z = ((float)HowMuch - (float)(GrainDemand))/(float)GrainDemand * 100.0;
+			z *= ((float)zp * (float)rand() % 25);
+			z += (float)rand() % 40;
+
+			TransplantedSerfs = (int)z;
+			Serfs += TransplantedSerfs;
+
+			cout << TransplantedSerfs << " serfs move to the city\n";
+
+			zp = (double)z;
+			z = ((float)zp * (float)rand()) / (float)RAND_MAX;
+
+			if(z > 50.0)
+				z = 50.0;
+			Merchants += (int)z;
+			Nobles++;
+			Clergy += 2;
+		}
+	}
+
+	if(Justice > 2){
+		JusticeRevenue = Serfs / 100 * (Justice - 2) * (Justice - 2);
+		JusticeRevenue = rand() % JusticeRevenue;
+		Serfs -= JusticeRevenue;
+		FleeingSerfs = JusticeRevenue;
+
+		cout << FleeingSerfs << " serfs flee harsh justice\n";
+	}
+
+	MarketRevenue = Marketplaces * 75;
+	if(MarketRevenue > 0){
+		Treasury += MarketRevenue;
+		cout << "Your market earned " << MarketRevenue << " florins.\n";
+	}
+
+	MillRevenue = Mills * (55 + rand() % 250);
+	if(MillRevenue > 0){
+		Treasury += MillRevenue;
+		cout << "Your woolen mill earned " << MillRevenue << " florins.\n";
+	}
+
+	SoldierPay = Soldiers * 3;
+	Treasury -= SoldierPay;
+
+	cout << "You paid your soldiers " << SoldierPay << " florins.\n";
+	cout << "You have " << Serfs << " serfs in your city.\n";
+	cout << "Press ENTER: ";
+	cin >> string;
+
+	if((Land / 1000) > Soldiers){
+		InvadeMe = true;
+		return(3);
+	}
+
+	return(0);
+	}
+
+};
+
 
 struct BuySellGrain {};
 
