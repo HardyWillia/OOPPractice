@@ -11,22 +11,22 @@
 #include "player.hpp"
 #include "purchases.hpp"
 #include "generate.hpp"
-#include "others.hpp"
+//#include "others.hpp"
 
 using namespace std;
 
 //Functions to carry out the behavior of the game
-void PlayGame(){}
-void ImDead(){}
+//void PlayGame(){}
+//void ImDead(){}
 
 int main(int argc, char* argv[]){
 
 	std::cout << "Start of game enhancements\n";
-	
+
 	//Print introductory instructions of the game
 	Introduction introduction;
 	introduction.Intro(); 
-	
+
 	//Player Information
 	Player *p = new PlayerProfile;
 	Player *p1 = new InitializePlayer;
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
 	gh->harvest();
 	gi->income();
 
-	SeizeAssets assets;
-	assets.seize();
+	//SeizeAssets assets;
+	//assets.seize();
 	return 0;
 }

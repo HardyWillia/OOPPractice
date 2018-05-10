@@ -5,6 +5,7 @@
 
 #include "player.hpp"
 #include "generate.hpp"
+#include "others.hpp"
 
 struct Purchase {
 public:
@@ -37,7 +38,7 @@ struct BuyCathedral : public Purchase {
 		Cathedral += 1;
 		Clergy = rand() % 7;
 		PublicWorks += 1.0;
-		Treasury -= 5000;
+		Purchase::Treasury -= 5000;
 		return;
 	}
 
@@ -59,7 +60,7 @@ public:
 		std::cin >> grains;
 	}
 
-	Treasury -= (grains * GrainPrice / 1000);
+	Purchase::Treasury -= (grains * GrainPrice / 1000);
 	GrainReserve += grains;
 	return;
 	}
@@ -85,11 +86,8 @@ struct SellGrain : public BuyGrain {
 		if(BuyGrain::grains > BuyGrain::GrainReserve){
 			std::cout << "You do not have to sell any grains.\n";
 		}
-	//int t = Purchase::Treasury;
-	//t += (BuyGrain::grains * BuyGrain::GrainPrice / 1000);
-	//BuyGrain::GrainReserve -= BuyGrain::grains;
 
-	Treasury += (grains * GrainPrice / 1000);
+	Purchase::Treasury += (grains * GrainPrice / 1000);
 	GrainReserve -= grains;
 
 	return;
@@ -107,7 +105,7 @@ public:
 		std::cin >> lands;
 		assert(lands >= 0);
 
-	Treasury -= (int)(((float)lands * LandPrice));
+	Purchase::Treasury -= (int)(((float)lands * LandPrice));
 
 	return;
 
@@ -123,7 +121,7 @@ protected:
 
 //Selling functionality.
 // TODO: derive this from BuyLand class
-struct SellLand{
+struct SellLand : public BuyLand{
 	using Purchase::Purchase;
 	using BuyLand::BuyLand;
 	void sellL() {
@@ -134,13 +132,13 @@ struct SellLand{
 	
 		HowMuch = string;
 
-		if(HowMuch > (Land - 5000)){
+		if(HowMuch > (lands - 5000)){
 			std::cout << "You can't sell that much\n";
 			return;
 		}
 
-		Land -= HowMuch;
-		Treasury += (int)(((float)HowMuch * LandPrice));
+		lands -= HowMuch;
+		Purchase::Treasury += (int)(((float)HowMuch * LandPrice));
 		return;
 	}
 };
@@ -154,7 +152,7 @@ struct BuyMarket : public Purchase {
 	void market() {
 		Marketplace += 1;
 		Merchants += 5;
-		Treasury -= 1000;
+		Purchase::Treasury -= 1000;
 		PublicWorks += 1.0;
 
 	return;
@@ -168,7 +166,7 @@ struct BuyMill : public Purchase {
 
 	void mill() {
 		Mills += 1;
-		Treasury -= 2000;
+		Purchase::Treasury -= 2000;
 		PublicWorks += 0.25;
 
 	return;
@@ -184,7 +182,7 @@ struct BuyPalace : public Purchase {
 	void palace() {
 		Palaces += 1;
 		Nobles = rand() % 3;
-		Treasury -= 3000;
+		Purchase::Treasury -= 3000;
 		PublicWorks += 0.5;
 
 	return;
@@ -202,7 +200,7 @@ struct BuySoldier : public Purchase {
 	void soldier() {
 		Soldiers += 20;
 		Serfs -= 20;
-		Treasury -= 500;
+		Purchase::Treasury -= 500;
 
 	return;
 	}
@@ -245,12 +243,12 @@ struct CheckNewTitle{
 		Total += limit10((int)(PublicWorks * 100.0), 500);
 */
 		//TitleNum = (Total / level) - Justice;
-	}
-};
-*/
+	//}
+//};
+
 //Other classes to implement
 
-struct NewLandAndGrainPrices {
+struct NewLandAndGrainPrices : public Purchase, BuyGrain, BuyCathedral, BuySoldier {
 	using Purchase::Purchase;
 	using BuyGrain::BuyGrain;
 	using BuyCathedral::BuyCathedral;
@@ -259,7 +257,7 @@ struct NewLandAndGrainPrices {
 	float x, y, MyRandom;
 	int h, GrainDemand, RatsAte;
 
-	void newprices(){
+	void newprices() override {
 		MyRandom = (float)((float)rand() / (float)RAND_MAX);
 
 		x = (float)Land;
@@ -276,7 +274,7 @@ struct NewLandAndGrainPrices {
 		GrainReserve += h;
 		GrainDemand += (Nobles * 100) + (Cathedral * 40) + (Merchants * 30);
 		GrainDemand += ((Soldiers * 10) + (Serfs * 5));
-		LandPrice = (3.0 * (float)Harvest + (float)rand() % 6 + 10.0) / 10.0;
+		LandPrice = (3.0 * (float)Harvest + (float)((rand() % 6) + 10.0) / 10.0);
 
 		if(h < 0)
 			h *= -1;
@@ -296,7 +294,7 @@ struct NewLandAndGrainPrices {
 		if(LandPrice < 1.0)
 			LandPrice = 1.0;
 
-		GrainPrice = (int)(((6.0 - (float)Harvest) * 3.0 + (float)rand() & 5 + (float)rand() % 5) * 4.0 * y);
+		GrainPrice = (int)(((6.0 - (float)Harvest) * 3.0 + (float)(rand() & 5) + (float)(rand() % 5)) * 4.0 * y);
 
 		RatsAte = h;
 
@@ -317,7 +315,7 @@ struct PrintGrain {
 			case 2: std::cout << "Bad Weather. Poor Harvest. "; break;
 			case 3: std::cout << "Normal Weather. Average Harvest. "; break;
 			case 4: std::cout << "Good Weather. Fine Harvest. "; break;
-			case 5: std::cout "Excellent Weather. Great Harvest! "; break;
+			case 5: std::cout << "Excellent Weather. Great Harvest! "; break;
 		}
 
 	return;
@@ -325,13 +323,17 @@ struct PrintGrain {
 
 };
 
-struct ReleaseGrain {
+struct ReleaseGrain : public Purchase, BuyGrain, BuySoldier, BuyMarket, BuyPalace, BuyLand, Generate, BuyMill {
+	using Purchase::Purchase;
 	using BuyGrain::BuyGrain;
 	using BuySoldier::BuySoldier;
 	using BuyMarket::BuyMarket;
+	using BuyPalace::BuyPalace;
+	using BuyLand::BuyLand;
 	using Generate::Generate;
+	using BuyMill::BuyMill;
 
-	int TransplantedSers, FleeingSerfs;
+	int TransplantedSers, FleeingSerfs, SoldierPay, MillRevenue;
 	bool InvadeMe;
 	
 	int release(){
@@ -393,19 +395,18 @@ struct ReleaseGrain {
 			if(x < 0.0){
 				xp = 0.0;
 				x = 0.0;
-			}
+		}
 
 			procreating(3.0);
 			decomposing(xp + 8.0);
-		}
 
-		else {
+		} else {
 
 			procreating(7.0);
 			decomposing(3.0);
 	
-		if((CustomsDuty + SalesTax) < 35) Merchants += rand() % 4;
-		if(IncomeTax < rand() % 28){
+		if((CustomsDuty + SalesTax) < 35) Merchants += (rand() % 4);
+		if(IncomeTax < (rand() % 28)){
 
 			Nobles += rand() % 2;
 			Clergy += rand() % 3;
@@ -415,8 +416,8 @@ struct ReleaseGrain {
 		if(HowMuch > (int)((float)GrainDemand * 1.3)){
 			zp = (double)Serfs / 1000.0;
 			z = ((float)HowMuch - (float)(GrainDemand))/(float)GrainDemand * 100.0;
-			z *= ((float)zp * (float)rand() % 25);
-			z += (float)rand() % 40;
+			z *= ((float)zp * (float)(rand() % 25));
+			z += (float)(rand() % 40);
 
 			TransplantedSerfs = (int)z;
 			Serfs += TransplantedSerfs;
@@ -424,7 +425,7 @@ struct ReleaseGrain {
 			std::cout << TransplantedSerfs << " serfs move to the city\n";
 
 			zp = (double)z;
-			z = ((float)zp * (float)rand()) / (float)RAND_MAX;
+			z = ((float)zp * (float)(rand())) / (float)RAND_MAX;
 
 			if(z > 50.0)
 				z = 50.0;
@@ -443,27 +444,27 @@ struct ReleaseGrain {
 		std::cout << FleeingSerfs << " serfs flee harsh justice\n";
 	}
 
-	MarketRevenue = Marketplaces * 75;
+	MarketRevenue = Marketplace * 75;
 	if(MarketRevenue > 0){
-		Treasury += MarketRevenue;
+		Purchase::Treasury += MarketRevenue;
 		std::cout << "Your market earned " << MarketRevenue << " florins.\n";
 	}
 
-	MillRevenue = Mills * (55 + rand() % 250);
+	MillRevenue = Mills * (55 + (rand() % 250));
 	if(MillRevenue > 0){
-		Treasury += MillRevenue;
+		Purchase::Treasury += MillRevenue;
 		std::cout << "Your woolen mill earned " << MillRevenue << " florins.\n";
 	}
 
 	SoldierPay = Soldiers * 3;
-	Treasury -= SoldierPay;
+	Purchase::Treasury -= SoldierPay;
 
 	std::cout << "You paid your soldiers " << SoldierPay << " florins.\n";
 	std::cout << "You have " << Serfs << " serfs in your city.\n";
 	std::cout << "Press ENTER: ";
 	std::cin >> string;
 
-	if((Land / 1000) > Soldiers){
+	if((lands / 1000) > Soldiers){
 		InvadeMe = true;
 		return(3);
 	}
