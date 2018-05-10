@@ -129,13 +129,13 @@ struct SellLand{
 	void sellL() {
 		char string[256];
 		int HowMuch;
-		cout << "How much land do you want to sell?: ";
-		cin >> string;
+		std::cout << "How much land do you want to sell?: ";
+		std::cin >> string;
 	
 		HowMuch = string;
 
 		if(HowMuch > (Land - 5000)){
-			cout << "You can't sell that much\n";
+			std::cout << "You can't sell that much\n";
 			return;
 		}
 
@@ -313,11 +313,11 @@ struct PrintGrain {
 		switch(Harvest){
 
 			case 0:
-			case 1: printf("Drought. Famine Threatens. "); break;
-			case 2: printf("Bad Weather. Poor Harvest. "); break;
-			case 3: printf("Normal Weather. Average Harvest. "); break;
-			case 4: printf("Good Weather. Fine Harvest. "); break;
-			case 5: printf("Excellent Weather. Great Harvest! "); break;
+			case 1: std::cout << "Drought. Famine Threatens. "; break;
+			case 2: std::cout << "Bad Weather. Poor Harvest. "; break;
+			case 3: std::cout << "Normal Weather. Average Harvest. "; break;
+			case 4: std::cout << "Good Weather. Fine Harvest. "; break;
+			case 5: std::cout "Excellent Weather. Great Harvest! "; break;
 		}
 
 	return;
@@ -346,9 +346,9 @@ struct ReleaseGrain {
 
 		while(isOK == false){
 
-			cout << "How much grain will you release for consumption?\n";
-			cout << "1 = Minimum " << Minimum << " 2 = Maximum " << Maximum << "or enter a value: ";
-			cin >> string;
+			std::cout << "How much grain will you release for consumption?\n";
+			std::cout << "1 = Minimum " << Minimum << " 2 = Maximum " << Maximum << "or enter a value: ";
+			std::cin >> string;
 
 			HowMuch = string;
 
@@ -357,9 +357,9 @@ struct ReleaseGrain {
 		if(HowMuch == 2)
 			HowMuch = Maximum;
 		if(HowMuch < Minimum)
-			cout << "You must release at least 20% of your reserves.\n";
+			std::cout << "You must release at least 20% of your reserves.\n";
 		else if (HowMuch > Maximum)
-			cout << "You must keep at least 20%.\n";
+			std::cout << "You must keep at least 20%.\n";
 		else
 			isOK = true;
 		}
@@ -421,7 +421,7 @@ struct ReleaseGrain {
 			TransplantedSerfs = (int)z;
 			Serfs += TransplantedSerfs;
 
-			cout << TransplantedSerfs << " serfs move to the city\n";
+			std::cout << TransplantedSerfs << " serfs move to the city\n";
 
 			zp = (double)z;
 			z = ((float)zp * (float)rand()) / (float)RAND_MAX;
@@ -440,28 +440,28 @@ struct ReleaseGrain {
 		Serfs -= JusticeRevenue;
 		FleeingSerfs = JusticeRevenue;
 
-		cout << FleeingSerfs << " serfs flee harsh justice\n";
+		std::cout << FleeingSerfs << " serfs flee harsh justice\n";
 	}
 
 	MarketRevenue = Marketplaces * 75;
 	if(MarketRevenue > 0){
 		Treasury += MarketRevenue;
-		cout << "Your market earned " << MarketRevenue << " florins.\n";
+		std::cout << "Your market earned " << MarketRevenue << " florins.\n";
 	}
 
 	MillRevenue = Mills * (55 + rand() % 250);
 	if(MillRevenue > 0){
 		Treasury += MillRevenue;
-		cout << "Your woolen mill earned " << MillRevenue << " florins.\n";
+		std::cout << "Your woolen mill earned " << MillRevenue << " florins.\n";
 	}
 
 	SoldierPay = Soldiers * 3;
 	Treasury -= SoldierPay;
 
-	cout << "You paid your soldiers " << SoldierPay << " florins.\n";
-	cout << "You have " << Serfs << " serfs in your city.\n";
-	cout << "Press ENTER: ";
-	cin >> string;
+	std::cout << "You paid your soldiers " << SoldierPay << " florins.\n";
+	std::cout << "You have " << Serfs << " serfs in your city.\n";
+	std::cout << "Press ENTER: ";
+	std::cin >> string;
 
 	if((Land / 1000) > Soldiers){
 		InvadeMe = true;
@@ -479,4 +479,6 @@ struct BuySellGrain {};
 struct AdjustTax {};
 
 struct StatePurchase {};
+
+
 #endif
